@@ -5,6 +5,10 @@
 //  Created by Андрей Фокин on 4.11.21.
 //
 
+
+// добавил эту заметку для теста на гитхаб
+
+
 import Foundation
 
 struct MenuResponce: Codable {
