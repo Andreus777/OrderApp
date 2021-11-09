@@ -91,7 +91,7 @@
                             <outlet property="delegate" destination="iT4-6k-SI4" id="ymm-lh-egU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="O6X-je-VPC"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="O6X-je-VPC"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E89-SE-mgy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

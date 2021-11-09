@@ -25,7 +25,6 @@ class MenuTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         menuController.fetchingMenuItems(forCategory: category) { result in
             switch result {
             case .success (let menuItems):
@@ -41,6 +40,7 @@ class MenuTableViewController: UITableViewController {
         DispatchQueue.main.async {
             self.menuItems = menuItems
             self.tableView.reloadData()
+            self.title = self.category.description.capitalized
         }
     }
     
