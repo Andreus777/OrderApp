@@ -9,7 +9,6 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
     
-    let menuController = MenuController()
     let category: String
     var menuItems = [MenuItem]()
     
@@ -25,7 +24,7 @@ class MenuTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        menuController.fetchingMenuItems(forCategory: category) { result in
+        MenuController.shared.fetchingMenuItems(forCategory: category) { result in
             switch result {
             case .success (let menuItems):
                 self.updateUI(menuItems: menuItems)
@@ -54,6 +53,21 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
+    let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "$"
+        return formatter
+    }()
+    
+    
+    @IBSegueAction func showMenuItem(_ coder: NSCoder, sender: Any?) -> MenuItemDetailViewController? {
+        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {return nil}
+        let menuItem = menuItems[indexPath.row]
+        return MenuItemDetailViewController(menuItem: menuItem, coder: coder)
+    }
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,7 +88,7 @@ class MenuTableViewController: UITableViewController {
     func configureCell(_ cell: UITableViewCell, forIndexPath indexPath: IndexPath){
         let menuItem = menuItems[indexPath.row]
         cell.textLabel?.text = menuItem.name
-        cell.detailTextLabel?.text = "$ \(menuItem.price)"
+        cell.detailTextLabel?.text = numberFormatter.string(from: NSNumber(value: menuItem.price))
     }
     
 

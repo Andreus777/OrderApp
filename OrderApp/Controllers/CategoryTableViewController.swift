@@ -9,14 +9,13 @@ import UIKit
 
 class CategoryTableViewController: UITableViewController {
 
-    let menuController = MenuController()
     var categories: [String] = []
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        menuController.fetchingCategories { result in
+        MenuController.shared.fetchingCategories { result in
             switch result {
             case .success(let categories):
                 self.updateUI(with: categories)

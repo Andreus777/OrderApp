@@ -8,12 +8,26 @@
 import UIKit
 
 class MenuItemDetailViewController: UIViewController {
-
+    
+    
+    let menuItem: MenuItem
+    
+    init?(menuItem: MenuItem, coder: NSCoder){
+        self.menuItem = menuItem
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
+    
+    
     
 
     /*

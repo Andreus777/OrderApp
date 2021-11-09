@@ -9,6 +9,8 @@ import Foundation
 
 class MenuController {
     
+    static let shared = MenuController()
+    
     typealias minuteToPrepare = Int
     
     let baseUrl = URL(string: "http://localhost:8080/")!
