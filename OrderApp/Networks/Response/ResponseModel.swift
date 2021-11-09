@@ -12,7 +12,7 @@
 import Foundation
 
 struct MenuResponce: Codable {
-    var item: [MenuItem]
+    var items: [MenuItem]
 }
 
 

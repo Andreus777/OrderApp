@@ -10,14 +10,24 @@ import Foundation
 class MenuController {
     
     typealias minuteToPrepare = Int
-   
+    
     let baseUrl = URL(string: "http://localhost:8080/")!
     
     
     func fetchingCategories(completion: @escaping(Result<[String], Error>) -> Void ){
         let categoriesURL = baseUrl.appendingPathComponent("categories")
         let task = URLSession.shared.dataTask(with: categoriesURL) { data, response, error in
-            <#code#>
+            if let data = data {
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    let categoriesResponse = try jsonDecoder.decode(CategoriesResponce.self, from: data)
+                    completion(.success(categoriesResponse.categories))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else if let error = error {
+                completion(.failure(error))
+            }
         }
         task.resume()
     }
@@ -29,7 +39,17 @@ class MenuController {
         components.queryItems = [URLQueryItem(name: "category", value: categoryName)]
         let menuURL = components.url!
         let task = URLSession.shared.dataTask(with: menuURL) { (data, response, error) in
-            <#code#>
+            if let data = data {
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    let menuResponse = try jsonDecoder.decode(MenuResponce.self, from: data)
+                    completion(.success(menuResponse.items))
+                } catch  {
+                    completion(.failure(error))
+                }
+            } else if let error = error {
+                completion(.failure(error))
+            }
         }
         task.resume()
     }
@@ -50,10 +70,19 @@ class MenuController {
         
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            <#code#>
+            if let data = data{
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    let orderResponse = try jsonDecoder.decode(OrderResponse.self, from: data)
+                    completion(.success(orderResponse.prepTime))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else if let error = error {
+                completion(.failure(error))
+            }
+            
         }
         task.resume()
     }
-    
-    
 }
