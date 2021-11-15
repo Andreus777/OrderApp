@@ -10,6 +10,14 @@ import Foundation
 class MenuController {
     
     static let shared = MenuController()
+    static let notificationOrderUpdated = Notification.Name("MenuController.Updated")
+   
+    var order = Order(){
+        didSet{
+            NotificationCenter.default.post(name: MenuController.notificationOrderUpdated, object: nil)
+        }
+    }
+    
     
     typealias minuteToPrepare = Int
     
