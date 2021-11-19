@@ -67,13 +67,13 @@ class MenuController {
     
     
     
-    func submitOrder(forMenuID menuID: [Int], completion: @escaping(Result<minuteToPrepare, Error>) -> Void){
+    func submitOrder(forMenuID menuIDs: [Int], completion: @escaping(Result<minuteToPrepare, Error>) -> Void){
         let orderURL = baseUrl.appendingPathComponent("order")
         
         var request = URLRequest(url: orderURL)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let data = ["menuID": menuID]
+        let data = ["menuIds": menuIDs]
         let jsonEncoder = JSONEncoder()
         let jsonData = try? jsonEncoder.encode(data)
         request.httpBody = jsonData
