@@ -67,12 +67,56 @@ class OrderTableViewController: UITableViewController {
     
     
     @IBAction func unwindToOrderList(segue: UIStoryboardSegue){
+        if segue.identifier == "dismissConfirmation" {
+            MenuController.shared.order.menuItems.removeAll()
+        }
         
     }
     
-    @IBAction func submitPressed(_ sender: UIBarButtonItem) {
+    @IBAction func submitPressed(_ sender: Any?) {
         
+        let totalOrder = MenuController.shared.order.menuItems.reduce(0.0) {(result, menuitem) -> Double in
+            return result + menuitem.price
+        }
         
+        let formattedTotatOrder = MenuItem.numberFormatter.string(from: NSNumber(value: totalOrder)) ?? "\(totalOrder)"
+        
+        let alert = UIAlertController(title: "Submit Order", message: "You're almost ready to confirm your order with a total of \(formattedTotatOrder)", preferredStyle: .actionSheet)
+        
+        let confirmAction = UIAlertAction(title: "Submit", style: .default, handler: { _ in
+            self.uploadOrder()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        
+        alert.addAction(confirmAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func uploadOrder(){
+        let menuId = MenuController.shared.order.menuItems.map{$0.id}
+        MenuController.shared.submitOrder(forMenuID: menuId) { result in
+            switch result{
+            case .success(let minutesToPrepare):
+                DispatchQueue.main.async {
+                    self.minutesToPrepareorder = minutesToPrepare
+                    self.performSegue(withIdentifier: "confirmOrder", sender: nil)
+                }
+            case .failure(let error):
+                self.displayError(title: "Order submission failed", error: error)
+            
+            }
+        }
+    }
+    
+    func displayError(title: String, error: Error){
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: title, message: error.localizedDescription, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     

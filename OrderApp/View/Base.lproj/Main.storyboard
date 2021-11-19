@@ -176,7 +176,7 @@
             </objects>
             <point key="canvasLocation" x="2786.9565217391305" y="6.6964285714285712"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Order-->
         <scene sceneID="q7n-0C-Y4h">
             <objects>
                 <tableViewController id="vnL-Ho-Uxo" customClass="OrderTableViewController" customModule="OrderApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -215,7 +215,7 @@
                             <outlet property="delegate" destination="vnL-Ho-Uxo" id="CeT-Df-b56"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="GYq-10-JlB">
+                    <navigationItem key="navigationItem" title="Order" id="GYq-10-JlB">
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="ceK-hB-zFJ">
                             <connections>
                                 <action selector="submitPressed:" destination="vnL-Ho-Uxo" id="YSe-TP-Uvl"/>
@@ -252,7 +252,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Dismiss"/>
                                         <connections>
-                                            <segue destination="shS-Qf-X4g" kind="unwind" identifier="dismissConfirmation" unwindAction="unwindToOrderListWithSegue:" id="N9j-Lc-eIV"/>
+                                            <segue destination="shS-Qf-X4g" kind="unwind" identifier="dismissConfirmation" unwindAction="unwindToOrderListWithSegue:" id="0Ju-d4-yJZ"/>
                                         </connections>
                                     </button>
                                 </subviews>
