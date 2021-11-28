@@ -38,6 +38,12 @@ class MenuItemDetailViewController: UIViewController {
         nameLabel.text = menuItem.name
         detailNameLabel.text = menuItem.detailText
         priceLabel.text = MenuItem.numberFormatter.string(from: NSNumber(value: menuItem.price))
+        MenuController.shared.fetchingImage(url: menuItem.imageURL) { image in
+            guard let image = image else {return}
+            DispatchQueue.main.async {
+                self.imageViewLabel.image = image
+            }
+        }
     }
     
     @IBAction func addToOrderButtonPressed(_ sender: UIButton) {
