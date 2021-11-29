@@ -73,6 +73,10 @@ class CategoryTableViewController: UITableViewController {
         cell.textLabel?.text = category.capitalized
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MenuController.shared.updateUserActivity(with: .categories)
+    }
     
     /*
     // Override to support conditional editing of the table view.

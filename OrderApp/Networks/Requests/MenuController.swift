@@ -12,10 +12,13 @@ class MenuController {
     
     static let shared = MenuController()
     static let notificationOrderUpdated = Notification.Name("MenuController.Updated")
+    
+    var userActivity = NSUserActivity(activityType: "com.example.OrderApp.order")
    
     var order = Order(){
         didSet{
             NotificationCenter.default.post(name: MenuController.notificationOrderUpdated, object: nil)
+            userActivity.order = order
         }
     }
     
@@ -107,5 +110,17 @@ class MenuController {
             }
         }
         task.resume()
+    }
+    
+    func updateUserActivity(with controller: StateRestorationController ){
+        switch controller {
+        case .menu(let category):
+            userActivity.menuCategory = category
+        case .menuItemDetail(let menuItem):
+            userActivity.menuItem = menuItem
+        case .categories, .order: break
+         
+        }
+        userActivity.controllerIdentifier = controller.identifier
     }
 }

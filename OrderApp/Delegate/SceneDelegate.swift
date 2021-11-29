@@ -23,9 +23,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
         NotificationCenter.default.addObserver(self, selector: #selector(updateBadgeValue), name: MenuController.notificationOrderUpdated, object: nil)
-        
         orderTabBarItem = (window?.rootViewController as? UITabBarController)?.viewControllers?[1].tabBarItem
-        
+        if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity {
+            configureScene(for: userActivity)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -56,6 +57,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
+        return MenuController.shared.userActivity
+    }
+    
+    func configureScene(for userActivity: NSUserActivity){
+        if let restoredOrder = userActivity.order{
+            MenuController.shared.order = restoredOrder
+        }
+    }
 
+    
 }
 

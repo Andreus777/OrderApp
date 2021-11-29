@@ -55,6 +55,10 @@ class MenuItemDetailViewController: UIViewController {
         MenuController.shared.order.menuItems.append(menuItem)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MenuController.shared.updateUserActivity(with: .menuItemDetail(menuItem))
+    }
 
     /*
     // MARK: - Navigation
